@@ -1,12 +1,29 @@
 <html>
-  <body>
+    <head>
+        <title> The LoveBrary </title>
+        <link type="text/css" media="screen" rel="stylesheet" href="stylesheets/main.css" />
+    </head>
+    <body>
 
-    <img src="images/site/LoveBrary.png"/>
+        <img src="images/site/LoveBrary.png" />
 
-    <p>Hello, {{ name }}!  Welcome to the LoveBrary!</p>
+        <p>Hello, {{ name }}!  Welcome to the LoveBrary!</p>
 
-    <a href="{{ url }}">{{ url_linktext }}</a>
+        <table>
+            <tr>
+                <th> Title </th>
+                <th> Date Added </th>
+            </tr>
+        {% for book in book_list %}
+            <tr>
+                <td> {{ book.title }} </td>
+                <td> {{ book.date }} </td>
+            </tr>
+        {% endfor %}
+        </table>
 
-  </body>
+        <a href="{{ url }}">{{ url_linktext }}</a>
+
+    </body>
 </html>
 

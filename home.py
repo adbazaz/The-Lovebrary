@@ -5,6 +5,8 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext.webapp import template
 
+from models.Book import *
+
 class MainPage(webapp.RequestHandler):
     def get(self):
 
@@ -18,10 +20,26 @@ class MainPage(webapp.RequestHandler):
             url_linktext = 'Login'
             name = "Anonymous"
 
+        B = Book.gql("ORDER BY date DESC LIMIT 10")
+        if B and B.count() == 0:
+            newB = Book()
+            newB.title = "Lovie Book"
+            newB.put()
+            newB2 = Book()
+            newB2.title = "Lovie Book #2"
+            newB2.put()
+
+        book_list = []
+        B = Book.gql("ORDER BY date DESC LIMIT 10")
+        if B and B.count() != 0:
+            for book in B:
+                book_list.append(book)
+
         template_values = {
           'url': url,
           'url_linktext': url_linktext,
           'name': name,
+          'book_list': book_list
           }
 
         path = os.path.join('templates', 'index.html')
